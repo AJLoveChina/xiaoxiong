@@ -3,6 +3,8 @@ import {initPixi} from "../common/pixi";
 import * as PIXI from 'pixi.js';
 import {SVGScene} from '@pixi-essentials/svg';
 import {initFabric, loadSP, loadSVG} from "../common/fabric";
+import {onClickAudio} from "../common/event";
+import {render} from "../common/render";
 
 
 export function Food() {
@@ -21,17 +23,8 @@ export function Food() {
 
 
     async function main() {
-      const sp = await loadSP({
-        svg: "regou.svg",
-        text: "冰淇淋",
-      });
-
-      sp.set({
-        left: sp.getScaledWidth() / 2 + 100,
-        top: sp.getScaledHeight() / 2 + 100,
-      })
-
-      fabCanvas.add(sp);
+      await render(fabCanvas);
+      onClickAudio(fabCanvas);
     }
 
     main();
