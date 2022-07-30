@@ -4,7 +4,7 @@ import * as PIXI from 'pixi.js';
 import {SVGScene} from '@pixi-essentials/svg';
 import {initFabric, loadSP, loadSVG} from "../common/fabric";
 import {onClickAudio} from "../common/event";
-import {render} from "../common/render";
+import {drawFoodBackground, render} from "../common/render";
 
 
 export function Food() {
@@ -17,12 +17,13 @@ export function Food() {
     let dom = document.createElement("canvas");
     div.current.appendChild(dom);
 
-    const {fabCanvas} = initFabric(dom);
+    const {fabCanvas} = initFabric(dom, {});
     (window as any).fabCanvas = fabCanvas;
     (window as any).canvas = fabCanvas;
 
 
     async function main() {
+      await drawFoodBackground(fabCanvas);
       await render(fabCanvas);
       onClickAudio(fabCanvas);
     }

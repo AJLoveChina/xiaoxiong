@@ -1,18 +1,18 @@
 import {fabric} from 'fabric'
-import {loadSVGFromString} from "fabric/fabric-impl";
+import {ICanvasOptions, loadSVGFromString} from "fabric/fabric-impl";
 import {audioSVG} from "./svg";
 import {AudioShape} from "../shapes/audio.shape";
 import {XX} from "../shapes/xx.shape";
 import {XXIMG} from "../shapes/xxbg.shape";
 
 
-export function initFabric(dom: HTMLCanvasElement) {
-
-
+export function initFabric(dom: HTMLCanvasElement, options: ICanvasOptions) {
   let fabCanvas = new fabric.Canvas(dom, {
     width: window.innerWidth,
     height: window.innerHeight,
     selection: true,
+    backgroundColor: "rgba(0,0,0,0)",
+    ...options,
   });
 
   return {
