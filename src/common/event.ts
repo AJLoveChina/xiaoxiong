@@ -3,6 +3,7 @@ import {fabric} from 'fabric'
 import {AudioShape} from "../shapes/audio.shape";
 import {XX} from "../shapes/xx.shape";
 import {Howl} from "howler";
+import {DataConfig} from "./data.config";
 
 
 export function onClickAudio(canvas: fabric.Canvas) {
@@ -39,4 +40,8 @@ export function onClickAudio(canvas: fabric.Canvas) {
       }
     }
   })
+}
+
+export function startTest(canvas: fabric.Canvas, data: DataConfig) {
+  let maxQ = Math.min(10, data.list.length);
 }

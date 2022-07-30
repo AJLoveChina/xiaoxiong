@@ -16,3 +16,10 @@ export function playAudio(url:string) {
   how.play();
   return how;
 }
+
+export function scaleObjTo(obj: fabric.Object, width: number, height: number) {
+  obj.set({
+    scaleX: width / obj.getScaledWidth() * (obj.scaleX || 1),
+    scaleY: height / obj.getScaledHeight() * (obj.scaleY || 1),
+  })
+}

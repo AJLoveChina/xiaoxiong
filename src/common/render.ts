@@ -1,18 +1,76 @@
-import {loadSP} from "./fabric";
+import {loadSP, loadSVGString} from "./fabric";
 import {fabric} from 'fabric'
-import {dataConfig} from "./data.config";
+import {DataConfig, dataConfig} from "./data.config";
+import {ceshiIcon} from "./svg";
+import {scaleObjTo} from "./common";
+import {startTest} from "./event";
 
-export async function render(canvas: fabric.Canvas) {
-  await Promise.all(dataConfig.list.map(async item => {
+export async function addTestButton(canvas: fabric.Canvas, options: {left: number, top: number}) {
+  const ceshiButton = await loadSVGString(ceshiIcon);
+  scaleObjTo(ceshiButton, 30, 30);
+  ceshiButton.set({
+    left: options.left,
+    top: options.top  - ceshiButton.getScaledHeight() / 2,
+  })
+
+  canvas.add(ceshiButton);
+
+  let bTesting = false;
+  ceshiButton.on('mouse:up', () => {
+    if (!bTesting) {
+      bTesting = true;
+      startTest(canvas, dataConfig);
+    }
+  })
+}
+
+export async function addShapes(canvas: fabric.Canvas, data: DataConfig, options: {left: number, top: number}) {
+  const margin = 30;
+  let widthCount: number = margin;
+  let heightCount: number = margin + options.top;
+
+  await Promise.all(dataConfig.list.map(async (item, idx) => {
     const sp = await loadSP(item);
 
+    if (widthCount + sp.getScaledWidth() < canvas.getWidth()) {
+      widthCount += sp.getScaledWidth();
+      widthCount += margin;
+    } else {
+      widthCount = margin + sp.getScaledWidth();
+      heightCount += sp.getScaledHeight();
+      heightCount += margin;
+    }
+
     sp.set({
-      left: sp.getScaledWidth() / 2 + 100,
-      top: sp.getScaledHeight() / 2 + 100,
+      left: widthCount - sp.getScaledWidth() / 2,
+      top: heightCount + sp.getScaledHeight() / 2,
     })
 
     canvas.add(sp);
   }))
+}
+
+export async function render(canvas: fabric.Canvas) {
+  const titleObj = await dataConfig.getTitleObj();
+  titleObj.set({
+    left: canvas.getWidth() / 2,
+    top: titleObj.getScaledHeight() / 2 + 40,
+    selectable: false,
+  });
+
+  canvas.add(titleObj);
+
+  const titleObjBBOX = titleObj.getBoundingRect(true);
+  await addTestButton(canvas, {
+    left: titleObjBBOX.left + titleObjBBOX.width + 30,
+    top: titleObjBBOX.top + titleObjBBOX.height,
+  })
+
+  await addShapes(canvas, dataConfig, {
+    left: 0,
+    top:  titleObjBBOX.top + titleObj.getScaledHeight(),
+  });
+
 }
 
 
