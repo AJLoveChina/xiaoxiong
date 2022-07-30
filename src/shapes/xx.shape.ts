@@ -26,12 +26,14 @@ export class XX extends fabric.Group {
   play() {
     this.clearSound();
     this.currentPlayHow = this.audio.play();
+    return this.currentPlayHow;
   }
 
   playShort() {
     this.clearSound();
     if (this.audioShort) {
       this.currentPlayHow = playAudio(`/audio/${this.audioShort}`);
+      return this.currentPlayHow;
     }
   }
 

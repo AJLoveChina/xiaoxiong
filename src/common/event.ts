@@ -2,9 +2,12 @@ import {shapeType} from "./common";
 import {fabric} from 'fabric'
 import {AudioShape} from "../shapes/audio.shape";
 import {XX} from "../shapes/xx.shape";
+import {Howl} from "howler";
 
 
 export function onClickAudio(canvas: fabric.Canvas) {
+  let currentPlayHow: Howl | undefined = undefined;
+
   canvas.on("mouse:up", (ev) => {
     const pos = canvas.getPointer(ev.e, false);
     const mousePosCanvasSpace = new fabric.Point(pos.x, pos.y);
@@ -25,11 +28,13 @@ export function onClickAudio(canvas: fabric.Canvas) {
         console.log("foundItem", foundItem);
         let audioShape = foundItem as AudioShape;
         if (foundItem.type === shapeType.audio) {
-          xx.play();
+          currentPlayHow?.stop();
+          currentPlayHow = xx.play();
         }
 
         if (foundItem.type === shapeType.img) {
-          xx.playShort();
+          currentPlayHow?.stop();
+          currentPlayHow = xx.playShort();
         }
       }
     }
