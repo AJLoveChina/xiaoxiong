@@ -5,12 +5,12 @@ import {ceshiIcon} from "./svg";
 import {scaleObjTo} from "./common";
 import {startTest} from "./event";
 
-export async function addTestButton(canvas: fabric.Canvas, options: {left: number, top: number}) {
+export async function addTestButton(canvas: fabric.Canvas, options: { left: number, top: number }) {
   const ceshiButton = await loadSVGString(ceshiIcon);
   scaleObjTo(ceshiButton, 30, 30);
   ceshiButton.set({
     left: options.left,
-    top: options.top  - ceshiButton.getScaledHeight() / 2,
+    top: options.top - ceshiButton.getScaledHeight() / 2,
   })
 
   canvas.add(ceshiButton);
@@ -24,21 +24,39 @@ export async function addTestButton(canvas: fabric.Canvas, options: {left: numbe
   })
 }
 
-export async function addShapes(canvas: fabric.Canvas, data: DataConfig, options: {left: number, top: number}) {
+export async function addShapes(canvas: fabric.Canvas, data: DataConfig, options: { left: number, top: number }) {
   const margin = 30;
   let widthCount: number = margin;
   let heightCount: number = margin + options.top;
 
-  await Promise.all(dataConfig.list.map(async (item, idx) => {
-    const sp = await loadSP(item);
+  const shapes = await Promise.all(dataConfig.list.map(async (item, idx) => {
+    return await loadSP(item);
+  }))
+
+  const shapesArea = shapes.reduce<number>((area, item) => {
+    return area + (item.getScaledWidth() + margin) * (item.getScaledHeight() + margin);
+  }, 0)
+
+  const totalArea = (canvas.getWidth() - options.left - 20) * (canvas.getHeight() - options.top - 20);
+  const scaleTotal = Math.min(1, totalArea / shapesArea);
+  const scale = Math.pow(scaleTotal, 1 / 2);
+
+  console.log("scaleTotal", scaleTotal);
+  shapes.forEach(sp => {
+    sp.set({
+      scaleX: (sp.scaleX || 1) * scale,
+      scaleY: (sp.scaleY || 1) * scale,
+    })
+
+    const scaledMargin = margin * scale;
 
     if (widthCount + sp.getScaledWidth() < canvas.getWidth()) {
       widthCount += sp.getScaledWidth();
-      widthCount += margin;
+      widthCount += scaledMargin;
     } else {
-      widthCount = margin + sp.getScaledWidth();
+      widthCount = scaledMargin + sp.getScaledWidth();
       heightCount += sp.getScaledHeight();
-      heightCount += margin;
+      heightCount += scaledMargin;
     }
 
     sp.set({
@@ -47,7 +65,7 @@ export async function addShapes(canvas: fabric.Canvas, data: DataConfig, options
     })
 
     canvas.add(sp);
-  }))
+  })
 }
 
 export async function render(canvas: fabric.Canvas) {
@@ -68,7 +86,7 @@ export async function render(canvas: fabric.Canvas) {
 
   await addShapes(canvas, dataConfig, {
     left: 0,
-    top:  titleObjBBOX.top + titleObj.getScaledHeight(),
+    top: titleObjBBOX.top + titleObj.getScaledHeight(),
   });
 
 }
