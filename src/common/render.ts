@@ -1,26 +1,47 @@
 import {loadSP, loadSVGString} from "./fabric";
 import {fabric} from 'fabric'
 import {DataConfig, dataConfig} from "./data.config";
-import {ceshiIcon} from "./svg";
+import {ceshiIcon, refreshIcon} from "./svg";
 import {scaleObjTo} from "./common";
 import {startTest} from "./event";
 
-export async function addTestButton(canvas: fabric.Canvas, options: { left: number, top: number }) {
+export async function addTestButton(canvas: fabric.Canvas, options: { left: number, top: number, width: number, height: number }) {
   const ceshiButton = await loadSVGString(ceshiIcon);
-  scaleObjTo(ceshiButton, 30, 30);
+  scaleObjTo(ceshiButton, options.width, options.height);
   ceshiButton.set({
+    fill: "#ee6f0b",
     left: options.left,
-    top: options.top - ceshiButton.getScaledHeight() / 2,
+    top: options.top,
+    selectable: false,
   })
 
   canvas.add(ceshiButton);
 
   let bTesting = false;
-  ceshiButton.on('mouse:up', () => {
+  ceshiButton.on('mouseup', () => {
     if (!bTesting) {
       bTesting = true;
       startTest(canvas, dataConfig);
     }
+  })
+
+  return ceshiButton;
+}
+
+export async function addRefreshButton(canvas: fabric.Canvas, options: { left: number, top: number, width: number, height: number }) {
+  const button = await loadSVGString(refreshIcon);
+  scaleObjTo(button, options.width, options.height);
+  button.set({
+    fill: "#ee6f0b",
+    left: options.left,
+    top: options.top,
+    selectable: false,
+  })
+
+  canvas.add(button);
+
+  button.on('mouseup', () => {
+    window.location.reload();
   })
 }
 
@@ -79,9 +100,20 @@ export async function render(canvas: fabric.Canvas) {
   canvas.add(titleObj);
 
   const titleObjBBOX = titleObj.getBoundingRect(true);
+  const btnOptions = {
+    width: 30,
+    height: 30,
+  }
   await addTestButton(canvas, {
-    left: titleObjBBOX.left + titleObjBBOX.width + 30,
-    top: titleObjBBOX.top + titleObjBBOX.height,
+    ...btnOptions,
+    left: titleObjBBOX.left + titleObjBBOX.width + btnOptions.width + 10,
+    top: titleObjBBOX.top + titleObjBBOX.height - btnOptions.height / 2,
+  })
+
+  await addRefreshButton(canvas, {
+    ...btnOptions,
+    left: titleObjBBOX.left + titleObjBBOX.width + btnOptions.width * 2 + 10 * 2,
+    top: titleObjBBOX.top + titleObjBBOX.height - btnOptions.height / 2,
   })
 
   await addShapes(canvas, dataConfig, {
