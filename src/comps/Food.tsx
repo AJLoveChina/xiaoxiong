@@ -3,7 +3,7 @@ import {initPixi} from "../common/pixi";
 import * as PIXI from 'pixi.js';
 import {SVGScene} from '@pixi-essentials/svg';
 import {initFabric, loadSP, loadSVG} from "../common/fabric";
-import {onClickAudio} from "../common/event";
+import {onClickAudio, supportDrag} from "../common/event";
 import {drawFoodBackground, render} from "../common/render";
 
 
@@ -26,6 +26,7 @@ export function Food() {
       await drawFoodBackground(fabCanvas);
       await render(fabCanvas);
       onClickAudio(fabCanvas);
+      supportDrag(fabCanvas);
     }
 
     main();

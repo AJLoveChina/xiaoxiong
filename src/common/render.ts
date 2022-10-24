@@ -1,9 +1,9 @@
-import {loadSP, loadSVGString} from "./fabric";
-import {fabric} from 'fabric'
-import {DataConfig, dataConfig} from "./data.config";
-import {ceshiIcon, refreshIcon} from "./svg";
-import {scaleObjTo} from "./common";
-import {startTest} from "./event";
+import { loadSP, loadSVGString } from "./fabric";
+import { fabric } from 'fabric'
+import { DataConfig, dataConfig } from "./data.config";
+import { ceshiIcon, refreshIcon } from "./svg";
+import { scaleObjTo, shapeType } from "./common";
+import { startTest } from "./event";
 
 export async function addTestButton(canvas: fabric.Canvas, options: { left: number, top: number, width: number, height: number }) {
   const ceshiButton = await loadSVGString(ceshiIcon);
@@ -149,6 +149,7 @@ export async function drawFoodBackground(canvas: fabric.Canvas) {
     }
 
     let group = new fabric.Group(objs, {
+      type: shapeType.backgroundIMG,
       selectable: false,
       left: 0,
       top: 0,

@@ -1,10 +1,35 @@
-import {shapeType} from "./common";
-import {fabric} from 'fabric'
-import {AudioShape} from "../shapes/audio.shape";
-import {XX} from "../shapes/xx.shape";
-import {Howl} from "howler";
-import {DataConfig} from "./data.config";
+import { getInitMatrix, invertPoint, pointASubB, shapeType } from "./common";
+import { fabric } from 'fabric'
+import { AudioShape } from "../shapes/audio.shape";
+import { XX } from "../shapes/xx.shape";
+import { Howl } from "howler";
+import { DataConfig } from "./data.config";
+import { IPoint } from "fabric/fabric-impl";
 
+
+export function supportDrag(canvas: fabric.Canvas) {
+  let mouseDownPosition: IPoint | undefined = undefined;
+  let matrix = canvas.viewportTransform || getInitMatrix();
+  canvas.on("mouse:down", evt => {
+    if (!evt.target || evt.target.type === shapeType.backgroundIMG) {
+      mouseDownPosition = evt.pointer;
+      matrix = canvas.viewportTransform || getInitMatrix()
+    }
+  })
+  canvas.on("mouse:move", evt => {
+    let curPos = evt.pointer;
+    if (mouseDownPosition && curPos) {
+      let offset = pointASubB(curPos, mouseDownPosition);
+      console.log(matrix, offset);
+
+      canvas.absolutePan(invertPoint(fabric.util.transformPoint(new fabric.Point(offset.x, offset.y), matrix)));
+    }
+  })
+
+  canvas.on("mouse:up", evt => {
+    mouseDownPosition = undefined;
+  })
+}
 
 export function onClickAudio(canvas: fabric.Canvas) {
   let currentPlayHow: Howl | undefined = undefined;
