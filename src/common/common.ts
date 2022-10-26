@@ -43,3 +43,12 @@ export function invertPoint(a: IPoint) {
 export function getInitMatrix() {
   return [1, 0, 0, 1, 0, 0];
 }
+
+export enum CategoryEnum {
+  FOOD,
+  CAR,
+}
+
+export function nonNullable<T>(value: T): value is NonNullable<T> {
+  return value !== null && value !== undefined;
+}

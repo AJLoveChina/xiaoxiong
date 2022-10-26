@@ -1,11 +1,10 @@
 import {useEffect, useRef} from "react";
 import {initPixi} from "../common/pixi";
-import * as PIXI from 'pixi.js';
-import {SVGScene} from '@pixi-essentials/svg';
+import {SVGScene} from "@pixi-essentials/svg";
 import {initFabric, loadSP, loadSVG} from "../common/fabric";
 import {onClickAudio, supportDrag} from "../common/event";
 import {drawFoodBackground, render} from "../common/render";
-
+import {foodDataConfig} from "../common/data/food.data.config";
 
 export function Food() {
   const div = useRef<HTMLDivElement>(null);
@@ -21,26 +20,25 @@ export function Food() {
     (window as any).fabCanvas = fabCanvas;
     (window as any).canvas = fabCanvas;
 
-
     async function main() {
       await drawFoodBackground(fabCanvas);
-      await render(fabCanvas);
+      await render(fabCanvas, foodDataConfig);
       onClickAudio(fabCanvas);
       supportDrag(fabCanvas);
     }
 
     main();
 
-
     return () => {
       if (div.current) {
         div.current.innerHTML = "";
       }
-    }
+    };
+  }, [div]);
 
-  }, [div])
-
-  return <div>
-    <div ref={div}></div>
-  </div>
+  return (
+      <div>
+        <div ref={div}></div>
+      </div>
+  );
 }

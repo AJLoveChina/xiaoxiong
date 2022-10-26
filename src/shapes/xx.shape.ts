@@ -1,23 +1,28 @@
-import {fabric} from 'fabric'
-import {IGroupOptions} from "fabric/fabric-impl";
-import {playAudio, shapeType} from "../common/common";
-import {Howl} from "howler";
-import {AudioShape} from "./audio.shape";
-
+import { fabric } from "fabric";
+import { IGroupOptions } from "fabric/fabric-impl";
+import { playAudio, shapeType } from "../common/common";
+import { Howl } from "howler";
+import { AudioShape } from "./audio.shape";
 
 export class XX extends fabric.Group {
-  type =  shapeType.xx;
+  type = shapeType.xx;
   audio: AudioShape;
   audioShort?: string;
   currentPlayHow?: Howl;
 
-  constructor(objs: [fabric.Object, fabric.Object, AudioShape], options?: IGroupOptions & {audioShort: string}) {
+  constructor(
+    objs: [fabric.Object, fabric.Object, AudioShape],
+    options?: IGroupOptions & { audioShort: string }
+  ) {
     super(objs, {
       left: 0,
       top: 0,
       originX: "center",
       originY: "center",
-      ...options
+      lockMovementY: true,
+      lockMovementX: true,
+      hasControls: false,
+      ...options,
     });
     this.audio = objs[2];
     this.audioShort = options?.audioShort;

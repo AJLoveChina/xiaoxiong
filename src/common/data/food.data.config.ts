@@ -1,31 +1,20 @@
+import {loadSVGString} from "../fabric";
 import {
   bangbangtang,
-  binkuai, foodTitle,
+  binkuai,
+  foodTitle,
   hanbobo, hebaodan,
   huafubin,
   huoguo,
-  juzizhi, kuangquanshui, lajiao, niunai,
-  regou, roujiamo,
+  juzizhi, kuangquanshui, lajiao, niunai, regou, roujiamo,
   sanminzhi,
   shizi, shutiao,
   xuegao,
   youtiao
-} from "./svg";
-import {loadSVGString} from "./fabric";
+} from "../svg";
+import {DataConfig} from "./data.config";
 
-export interface DataItem {
-  svg: string | [string];
-  text: string;
-  audio: string;
-  audioShort: string;
-}
-
-export interface DataConfig {
-  list: DataItem[],
-  getTitleObj: () => Promise<fabric.Object>;
-}
-
-export const dataConfig: DataConfig = {
+export const foodDataConfig: DataConfig = {
   getTitleObj: async () => {
     let svg = await loadSVGString(foodTitle);
     return svg;
@@ -34,19 +23,19 @@ export const dataConfig: DataConfig = {
     {
       svg: "regou.svg",
       text: "冰淇淋",
-      audio: 'ice-cream.mp3',
+      audio: "ice-cream.mp3",
       audioShort: "ice-cream-2.mp3",
     },
     {
       svg: [hanbobo],
       text: "汉堡包",
-      audio: 'hbb2.mp3',
+      audio: "hbb2.mp3",
       audioShort: "hbb.mp3",
     },
     {
       svg: [xuegao],
       text: "雪糕",
-      audio: 'xuegao.mp3',
+      audio: "xuegao.mp3",
       audioShort: "xuegao2.mp3",
     },
     {
@@ -139,5 +128,5 @@ export const dataConfig: DataConfig = {
       audio: "",
       audioShort: "辣椒.mp3",
     },
-  ]
-}
+  ],
+};

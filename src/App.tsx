@@ -1,5 +1,6 @@
-import {Food} from "./comps/Food";
-import {fabric} from 'fabric'
+import { Food } from "./comps/Food";
+import { fabric } from 'fabric'
+import { Dashboard } from "./comps/dashboard/dashboard";
 
 function App() {
   fabric.Object.prototype.originX = "center";
@@ -8,9 +9,9 @@ function App() {
   fabric.Object.prototype.top = 0;
 
   return (
-      <div>
-        <Food />
-      </div>
+    <div>
+      <Dashboard />
+    </div>
   );
 }
 
