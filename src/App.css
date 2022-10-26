@@ -1,6 +1,11 @@
+* {
+    border: 0;
+    padding: 0;
+    box-sizing: border-box;
+    color: #333;
+}
+
 .App {
-  border: 0;
-  padding:0;
-  overflow: hidden;
-  box-sizing: border-box;
+    overflow: hidden;
+
 }

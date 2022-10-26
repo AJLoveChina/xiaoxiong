@@ -3,41 +3,45 @@ import { CategoryEnum } from "../../common/common"
 import { Car } from "../car/Car"
 import { Food } from "../Food"
 import { HomeSVG } from "../../svgs/svgs"
+import { DashboardCard } from "./DashboardCard"
 
 
 export function Dashboard() {
-  const [cat, setCat] = useState<CategoryEnum | undefined>(CategoryEnum.CAR)
+  const [cat, setCat] = useState<CategoryEnum | undefined>(undefined)
+  const cards = [
+    {
+      img: "img/dashboard/food.jpg",
+      title: "美味的食物",
+      cat: CategoryEnum.FOOD,
+    },
+    {
+      img: "img/dashboard/boli.jpg",
+      title: "交通工具",
+      cat: CategoryEnum.CAR,
+    },
+  ]
+
+
   return (
     <>
-      {cat === undefined && (
-        <>
-          <button
-            onClick={() => {
-              setCat(CategoryEnum.FOOD)
-            }}
-          >
-            Food
-          </button>
-          <button
-            onClick={() => {
-              setCat(CategoryEnum.CAR)
-            }}
-          >
-            Car
-          </button>
-        </>
-      )}
+      {cat === undefined && <div style={{ display: "flex" }}>
+        {
+          (cards.map(card => {
+              return <DashboardCard style={{ margin: "20px" }} img={card.img} title={card.title}
+                                    onClick={() => setCat(card.cat)} />
+            })
+          )
+        }
+      </div>}
       {cat !== undefined && (
-        <>
-          <HomeSVG
-            style={{ position: "fixed", left: "20px", top: "20px", zIndex: 999}}
-            onClick={() => setCat(undefined)}/>
-          {/*<img*/}
-          {/*  src={"img/home.png"}*/}
-          {/*  style={{ position: "fixed", left: "20px", top: "20px", zIndex: 999, width: "100px" }}*/}
-          {/*  onClick={() => setCat(undefined)}*/}
-          {/*/>*/}
-        </>
+        <HomeSVG
+          style={
+            {
+              position: "fixed", left: "20px", top: "20px", zIndex: 999,
+            }
+          }
+          onClick={() => setCat(undefined)}
+        />
       )}
       {cat === CategoryEnum.FOOD && <Food />}
       {cat === CategoryEnum.CAR && <Car />}
