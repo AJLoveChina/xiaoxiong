@@ -1,7 +1,7 @@
 import { Food } from "./comps/Food"
 import { fabric } from "fabric"
 import { Dashboard } from "./comps/dashboard/dashboard"
-import "./App.css"
+import "./App.scss"
 
 function App() {
   fabric.Object.prototype.originX = "center"

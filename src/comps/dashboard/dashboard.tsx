@@ -4,8 +4,9 @@ import { Car } from "../car/Car"
 import { Food } from "../Food"
 import { HomeSVG } from "../../svgs/svgs"
 import { DashboardCard } from "./DashboardCard"
-import "./dashboard.css"
+import "./dashboard.scss"
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom"
+import { Playground } from "../playground/playground"
 
 export function Dashboard() {
   const cards = [
@@ -58,6 +59,13 @@ export function Dashboard() {
 
         <Route path="/car">
           <Car />
+          <Link to="/">
+            <HomeSVG style={homeBackPosCss} />
+          </Link>
+        </Route>
+
+        <Route path="/playground">
+          <Playground />
           <Link to="/">
             <HomeSVG style={homeBackPosCss} />
           </Link>
