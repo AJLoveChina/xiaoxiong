@@ -1,11 +1,11 @@
-import { loadSVGString } from "../fabric";
-import { diaoche, foodTitle } from "../svg";
-import { DataConfig } from "./data.config";
+import { loadSVGString } from "../fabric"
+import { diaoche, foodTitle } from "../svg"
+import { DataConfig } from "./data.config"
 
 export const carDataConfig: DataConfig = {
   getTitleObj: async () => {
-    let svg = await loadSVGString(foodTitle);
-    return svg;
+    let svg = await loadSVGString(foodTitle)
+    return svg
   },
   list: [
     {
@@ -148,4 +148,4 @@ export const carDataConfig: DataConfig = {
       audioShort: "黑猪猪vv7.mp3",
     },
   ],
-};
+}

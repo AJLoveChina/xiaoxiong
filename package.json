@@ -25,6 +25,7 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
+    "prettier-write": "prettier --write .",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
@@ -46,6 +47,7 @@
     ]
   },
   "devDependencies": {
-    "@types/fabric": "^4.5.11"
+    "@types/fabric": "^4.5.11",
+    "prettier": "2.7.1"
   }
 }

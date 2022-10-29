@@ -1,23 +1,30 @@
-import {loadSVGString} from "../fabric";
+import { loadSVGString } from "../fabric"
 import {
   bangbangtang,
   binkuai,
   foodTitle,
-  hanbobo, hebaodan,
+  hanbobo,
+  hebaodan,
   huafubin,
   huoguo,
-  juzizhi, kuangquanshui, lajiao, niunai, regou, roujiamo,
+  juzizhi,
+  kuangquanshui,
+  lajiao,
+  niunai,
+  regou,
+  roujiamo,
   sanminzhi,
-  shizi, shutiao,
+  shizi,
+  shutiao,
   xuegao,
-  youtiao
-} from "../svg";
-import {DataConfig} from "./data.config";
+  youtiao,
+} from "../svg"
+import { DataConfig } from "./data.config"
 
 export const foodDataConfig: DataConfig = {
   getTitleObj: async () => {
-    let svg = await loadSVGString(foodTitle);
-    return svg;
+    let svg = await loadSVGString(foodTitle)
+    return svg
   },
   list: [
     {
@@ -129,4 +136,4 @@ export const foodDataConfig: DataConfig = {
       audioShort: "辣椒.mp3",
     },
   ],
-};
+}

@@ -4,7 +4,7 @@ import { Car } from "../car/Car"
 import { Food } from "../Food"
 import { HomeSVG } from "../../svgs/svgs"
 import { DashboardCard } from "./DashboardCard"
-
+import "./dashboard.css"
 
 export function Dashboard() {
   const [cat, setCat] = useState<CategoryEnum | undefined>(undefined)
@@ -21,25 +21,30 @@ export function Dashboard() {
     },
   ]
 
-
   return (
     <>
-      {cat === undefined && <div style={{ display: "flex" }}>
-        {
-          (cards.map(card => {
-              return <DashboardCard style={{ margin: "20px" }} img={card.img} title={card.title}
-                                    onClick={() => setCat(card.cat)} />
-            })
-          )
-        }
-      </div>}
+      {cat === undefined && (
+        <div className={"dashboard"}>
+          {cards.map((card) => {
+            return (
+              <DashboardCard
+                style={{ margin: "20px" }}
+                img={card.img}
+                title={card.title}
+                onClick={() => setCat(card.cat)}
+              />
+            )
+          })}
+        </div>
+      )}
       {cat !== undefined && (
         <HomeSVG
-          style={
-            {
-              position: "fixed", left: "20px", top: "20px", zIndex: 999,
-            }
-          }
+          style={{
+            position: "fixed",
+            left: "20px",
+            top: "20px",
+            zIndex: 999,
+          }}
           onClick={() => setCat(undefined)}
         />
       )}
