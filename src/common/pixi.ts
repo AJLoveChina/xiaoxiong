@@ -1,4 +1,4 @@
-import * as PIXI from "pixi.js"
+import * as PIXI from "pixi.js";
 
 export function initPixi() {
   // The application will create a renderer using WebGL, if possible,
@@ -8,11 +8,11 @@ export function initPixi() {
     width: window.innerWidth,
     height: window.innerHeight,
     backgroundColor: 0xffffaa,
-  })
+  });
 
   return {
     app,
     view: app.view,
     loader: app.loader,
-  }
+  };
 }

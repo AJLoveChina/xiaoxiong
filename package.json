@@ -53,6 +53,7 @@
   "devDependencies": {
     "@types/fabric": "^4.5.11",
     "@types/react-router-dom": "^5.3.3",
+    "eslint-config-prettier": "^8.5.0",
     "prettier": "2.7.1",
     "sass": "^1.55.0"
   }

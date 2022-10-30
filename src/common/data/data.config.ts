@@ -17,18 +17,18 @@ import {
   shutiao,
   xuegao,
   youtiao,
-} from "../svg"
-import { loadSVGString } from "../fabric"
+} from "../svg";
+import { loadSVGString } from "../fabric";
 
 export interface DataItem {
-  svg?: string | [string]
-  img?: string
-  text: string
-  audio: string
-  audioShort: string
+  svg?: string | [string];
+  img?: string;
+  text: string;
+  audio?: string;
+  audioShort?: string;
 }
 
 export interface DataConfig {
-  list: DataItem[]
-  getTitleObj: () => Promise<fabric.Object>
+  list: DataItem[];
+  getTitleObj: () => Promise<fabric.Object>;
 }

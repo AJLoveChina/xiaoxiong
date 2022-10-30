@@ -1,1 +1,1 @@
-export { ReactComponent as HomeSVG } from "./home.svg"
+export { ReactComponent as HomeSVG } from "./home.svg";

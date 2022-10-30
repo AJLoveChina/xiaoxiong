@@ -1,12 +1,12 @@
-import { CSSProperties, useState } from "react"
-import { CategoryEnum } from "../../common/common"
-import { Car } from "../car/Car"
-import { Food } from "../Food"
-import { HomeSVG } from "../../svgs/svgs"
-import { DashboardCard } from "./DashboardCard"
-import "./dashboard.scss"
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom"
-import { Playground } from "../playground/playground"
+import { CSSProperties, useState } from "react";
+import { CategoryEnum } from "../../common/common";
+import { Car } from "../car/Car";
+import { Food } from "../Food";
+import { HomeSVG } from "../../svgs/svgs";
+import { DashboardCard } from "./DashboardCard";
+import "./dashboard.scss";
+import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import { Playground } from "../playground/playground";
 
 export function Dashboard() {
   const cards = [
@@ -22,14 +22,14 @@ export function Dashboard() {
       cat: CategoryEnum.CAR,
       path: "/car",
     },
-  ]
+  ];
 
   const homeBackPosCss: CSSProperties = {
     position: "fixed",
     left: "20px",
     top: "20px",
     zIndex: 999,
-  }
+  };
 
   return (
     <Router>
@@ -45,7 +45,7 @@ export function Dashboard() {
                     title={card.title}
                   />
                 </Link>
-              )
+              );
             })}
           </div>
         </Route>
@@ -72,5 +72,5 @@ export function Dashboard() {
         </Route>
       </Switch>
     </Router>
-  )
+  );
 }

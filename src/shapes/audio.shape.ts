@@ -1,11 +1,11 @@
-import { fabric } from "fabric"
-import { IGroupOptions } from "fabric/fabric-impl"
-import { playAudio, shapeType } from "../common/common"
-import { Howl } from "howler"
+import { fabric } from "fabric";
+import { IGroupOptions } from "fabric/fabric-impl";
+import { playAudio, shapeType } from "../common/common";
+import { Howl } from "howler";
 
 export class AudioShape extends fabric.Group {
-  type = shapeType.audio
-  audio?: string
+  type = shapeType.audio;
+  audio?: string;
 
   constructor(
     objs: fabric.Object[],
@@ -17,15 +17,15 @@ export class AudioShape extends fabric.Group {
       originX: "center",
       originY: "center",
       ...options,
-    })
-    this.audio = options?.audio
+    });
+    this.audio = options?.audio;
   }
 
   play() {
-    let file = this.audio
+    let file = this.audio;
 
     if (file) {
-      return playAudio(`/audio/${file}`)
+      return playAudio(`/audio/${file}`);
     }
   }
 }
