@@ -83,7 +83,7 @@ export function Playground() {
       setFabCanvas(fabCanvas);
       (window as any).fabCanvas = fabCanvas;
       (window as any).canvas = fabCanvas;
-      // supportDrag(fabCanvas);
+      supportDrag(fabCanvas);
     });
 
     return () => {

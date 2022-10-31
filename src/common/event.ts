@@ -9,7 +9,25 @@ import { IPoint } from "fabric/fabric-impl";
 export function supportDrag(canvas: fabric.Canvas) {
   let mouseDownPosition: IPoint | undefined = undefined;
   let matrix = canvas.viewportTransform || getInitMatrix();
+  let bPressSpace = false;
+  document.body.addEventListener("keydown", (ev) => {
+    if (ev.key === " ") {
+      bPressSpace = true;
+      canvas.setCursor("move");
+    }
+  });
+
+  document.body.addEventListener("keyup", (ev) => {
+    if (ev.key === " ") {
+      bPressSpace = false;
+      canvas.setCursor("default");
+    }
+  });
+
   canvas.on("mouse:down", (evt) => {
+    if (!bPressSpace) {
+      return;
+    }
     if (
       !evt.target ||
       (evt.target.lockMovementX && evt.target.lockMovementY) ||
