@@ -3,6 +3,9 @@ import { IGroupOptions } from "fabric/fabric-impl";
 import { nonNullable, playAudio, shapeType } from "../common/common";
 import { Howl } from "howler";
 import { AudioShape } from "./audio.shape";
+import { enlivenObject } from "../common/fabric";
+
+const fabAny: any = fabric;
 
 export interface XXOptions extends IGroupOptions {
   audioShort?: string;
@@ -16,6 +19,9 @@ export class XX extends fabric.Group {
   audio?: AudioShape;
   audioShort?: string;
   currentPlayHow?: Howl;
+  img?: fabric.Object;
+  text?: fabric.Object;
+  audioShape?: AudioShape;
 
   constructor(options?: XXOptions) {
     const allShapes = options
@@ -34,6 +40,10 @@ export class XX extends fabric.Group {
     });
     this.audio = options?.audioShape;
     this.audioShort = options?.audioShort;
+
+    this.img = options?.img;
+    this.text = options?.text;
+    this.audioShape = options?.audioShape;
   }
 
   play() {
@@ -57,5 +67,38 @@ export class XX extends fabric.Group {
       this.currentPlayHow.stop();
       this.currentPlayHow = undefined;
     }
+  }
+
+  toObject() {
+    let json = super.toObject();
+    return {
+      ...json,
+      audioShort: this.audioShort,
+      img: this.img ? this.img.toObject() : undefined,
+      text: this.text ? this.text.toObject() : undefined,
+      audioShape: this.audioShape ? this.audioShape.toObject() : undefined,
+      hasControls: this.hasControls,
+      lockMovementY: this.lockMovementY,
+      lockMovementX: this.lockMovementX,
+    };
+  }
+
+  static async fromObject(object: any, callback: (obj: XX) => void) {
+    var objects = object.objects,
+      options: XXOptions = fabAny.util.object.clone(object, true);
+
+    const img = object.img ? await enlivenObject(object.img) : undefined;
+    const text = object.text ? await enlivenObject(object.text) : undefined;
+    const audioShape = object.audioShape
+      ? await enlivenObject(object.audioShape)
+      : undefined;
+
+    Object.assign(options, {
+      img: img,
+      text: text,
+      audioShape: audioShape,
+    });
+
+    callback(new XX(options));
   }
 }

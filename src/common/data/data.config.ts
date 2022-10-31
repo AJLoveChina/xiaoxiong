@@ -23,7 +23,7 @@ import { loadSVGString } from "../fabric";
 export interface DataItem {
   svg?: string | [string];
   img?: string;
-  text: string;
+  text?: string;
   audio?: string;
   audioShort?: string;
 }

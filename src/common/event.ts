@@ -23,7 +23,6 @@ export function supportDrag(canvas: fabric.Canvas) {
     let curPos = evt.pointer;
     if (mouseDownPosition && curPos) {
       let offset = pointASubB(curPos, mouseDownPosition);
-      console.log(matrix, offset);
 
       canvas.absolutePan(
         invertPoint(

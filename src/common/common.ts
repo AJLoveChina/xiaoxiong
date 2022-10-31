@@ -3,10 +3,10 @@ import { Howl } from "howler";
 
 export enum shapeType {
   group = "group",
-  audio = "audio",
-  xx = "xx",
-  img = "img",
-  backgroundIMG = "backgroundIMG",
+  audio = "AudioShape",
+  xx = "XX",
+  img = "XXIMG",
+  backgroundIMG = "BackgroundIMG",
 }
 
 export function playAudio(url: string) {
