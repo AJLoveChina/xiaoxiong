@@ -47,6 +47,7 @@ export function Dashboard() {
                 </Link>
               );
             })}
+            {process.env.NODE_ENV === "development" && (<Link to={"/playground"}>playground</Link>)}
           </div>
         </Route>
 

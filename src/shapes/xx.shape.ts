@@ -71,6 +71,7 @@ export class XX extends fabric.Group {
 
   toObject() {
     let json = super.toObject();
+    delete json.objects;
     return {
       ...json,
       audioShort: this.audioShort,
@@ -84,8 +85,7 @@ export class XX extends fabric.Group {
   }
 
   static async fromObject(object: any, callback: (obj: XX) => void) {
-    var objects = object.objects,
-      options: XXOptions = fabAny.util.object.clone(object, true);
+    const options: XXOptions = fabAny.util.object.clone(object, true);
 
     const img = object.img ? await enlivenObject(object.img) : undefined;
     const text = object.text ? await enlivenObject(object.text) : undefined;

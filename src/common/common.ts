@@ -52,3 +52,24 @@ export enum CategoryEnum {
 export function nonNullable<T>(value: T): value is NonNullable<T> {
   return value !== null && value !== undefined;
 }
+
+export function getSimpleJSONIncludeKeys() {
+  return [
+    "type",
+    "left",
+    "top",
+    "width",
+    "height",
+    "scaleX",
+    "scaleY",
+    "angle",
+    "opacity",
+    "skewX",
+    "skewY",
+    "img",
+    "lockMovementY",
+    "lockMovementX",
+    "text",
+    "audioShape",
+  ];
+}

@@ -6,6 +6,7 @@ import { onClickAudio, supportDrag } from "../../common/event";
 import { DataItem } from "../../common/data/data.config";
 import { useUploadPasteFile } from "../../common/uploadPasteFile";
 import { nonNullable } from "../../common/common";
+import { Snackbar } from "@mui/material";
 
 interface FabricCanvasJSON {
   objects: fabric.Object[];
@@ -95,8 +96,21 @@ export function Playground() {
     };
   }, [div]);
 
+  function popMsg(msg: string) {
+    window.alert(msg);
+  }
+
+  function copyJson() {
+    if (fabCanvas) {
+      navigator.clipboard.writeText(JSON.stringify(fabCanvas.toJSON()));
+      popMsg("copy json success");
+    } else {
+      popMsg("copy json failed");
+    }
+  }
+
   return (
-    <div>
+    <div className={"playground"}>
       <div
         style={{
           position: "fixed",
@@ -106,13 +120,21 @@ export function Playground() {
         }}
       >
         <button
+          className={"button"}
           onClick={() => {
-            console.log("clear");
-            localStorage.removeItem(localStorageKey);
-            location.reload();
+            let bClear = window.confirm("clear");
+            if (bClear) {
+              console.log("clear");
+              localStorage.removeItem(localStorageKey);
+              location.reload();
+            }
           }}
         >
           Clear Local
+        </button>
+
+        <button className={"button"} onClick={copyJson}>
+          Copy JSON
         </button>
       </div>
 
