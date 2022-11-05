@@ -114,42 +114,42 @@ export async function addShapes(
 }
 
 export async function render(canvas: fabric.Canvas, dataConfig: DataConfig) {
-  const titleObj = await dataConfig.getTitleObj();
-  titleObj.set({
-    left: canvas.getWidth() / 2,
-    top: titleObj.getScaledHeight() / 2 + 40,
-    selectable: false,
-  });
-
-  canvas.add(titleObj);
-
-  const titleObjBBOX = titleObj.getBoundingRect(true);
-  const btnOptions = {
-    width: 30,
-    height: 30,
-  };
-  await addTestButton(
-    canvas,
-    {
-      ...btnOptions,
-      left: titleObjBBOX.left + titleObjBBOX.width + btnOptions.width + 10,
-      top: titleObjBBOX.top + titleObjBBOX.height - btnOptions.height / 2,
-    },
-    dataConfig
-  );
-
-  await addRefreshButton(canvas, {
-    ...btnOptions,
-    left:
-      titleObjBBOX.left + titleObjBBOX.width + btnOptions.width * 2 + 10 * 2,
-    top: titleObjBBOX.top + titleObjBBOX.height - btnOptions.height / 2,
-  });
+  // const titleObj = await dataConfig.getTitleObj();
+  // titleObj.set({
+  //   left: canvas.getWidth() / 2,
+  //   top: titleObj.getScaledHeight() / 2 + 40,
+  //   selectable: false,
+  // });
+  //
+  // canvas.add(titleObj);
+  //
+  // const titleObjBBOX = titleObj.getBoundingRect(true);
+  // const btnOptions = {
+  //   width: 30,
+  //   height: 30,
+  // };
+  // await addTestButton(
+  //   canvas,
+  //   {
+  //     ...btnOptions,
+  //     left: titleObjBBOX.left + titleObjBBOX.width + btnOptions.width + 10,
+  //     top: titleObjBBOX.top + titleObjBBOX.height - btnOptions.height / 2,
+  //   },
+  //   dataConfig
+  // );
+  //
+  // await addRefreshButton(canvas, {
+  //   ...btnOptions,
+  //   left:
+  //     titleObjBBOX.left + titleObjBBOX.width + btnOptions.width * 2 + 10 * 2,
+  //   top: titleObjBBOX.top + titleObjBBOX.height - btnOptions.height / 2,
+  // });
 
   await addShapes(
     canvas,
     {
       left: 0,
-      top: titleObjBBOX.top + titleObj.getScaledHeight(),
+      top: 0,
     },
     dataConfig
   );

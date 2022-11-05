@@ -2,7 +2,7 @@ import { CSSProperties, useState } from "react";
 import { CategoryEnum } from "../../common/common";
 import { Car } from "../car/Car";
 import { Food } from "../Food";
-import { HomeSVG } from "../../svgs/svgs";
+import { HomeSVG, Reload } from "../../svgs/svgs";
 import { DashboardCard } from "./DashboardCard";
 import "./dashboard.scss";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
@@ -31,6 +31,16 @@ export function Dashboard() {
     zIndex: 999,
   };
 
+  const reloadposCss: CSSProperties = {
+    position: "fixed",
+    right: "20px",
+    top: "20px",
+    zoom: 2,
+    color: "red",
+    fill: "red",
+    zIndex: 999,
+  };
+
   return (
     <Router>
       <Switch>
@@ -47,7 +57,9 @@ export function Dashboard() {
                 </Link>
               );
             })}
-            {process.env.NODE_ENV === "development" && (<Link to={"/playground"}>playground</Link>)}
+            {process.env.NODE_ENV === "development" && (
+              <Link to={"/playground"}>playground</Link>
+            )}
           </div>
         </Route>
 
@@ -56,6 +68,7 @@ export function Dashboard() {
           <Link to="/">
             <HomeSVG style={homeBackPosCss} />
           </Link>
+          <Reload onClick={() => location.reload()} style={reloadposCss} />
         </Route>
 
         <Route path="/car">
@@ -63,6 +76,7 @@ export function Dashboard() {
           <Link to="/">
             <HomeSVG style={homeBackPosCss} />
           </Link>
+          <Reload onClick={() => location.reload()} style={reloadposCss} />
         </Route>
 
         <Route path="/playground">

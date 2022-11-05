@@ -24,8 +24,9 @@ export class XX extends fabric.Group {
   audioShape?: AudioShape;
 
   constructor(options?: XXOptions) {
+    // options?.audioShape
     const allShapes = options
-      ? [options.img, options?.text, options?.audioShape].filter(nonNullable)
+      ? [options.img, options?.text].filter(nonNullable)
       : [];
 
     super(allShapes, {
