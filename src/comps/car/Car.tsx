@@ -12,6 +12,9 @@ import {
   playTapObject,
   supportTouchDrag,
 } from "../../common/touch";
+import {
+  drawBackgroundByFabric,
+} from "../../common/background";
 
 export function Car() {
   const div = useRef<HTMLDivElement>(null);
@@ -30,7 +33,10 @@ export function Car() {
     fabCanvas.selection = false;
 
     async function main() {
-      await drawCarBackground(fabCanvas);
+      await drawBackgroundByFabric({
+        canvas: fabCanvas,
+        img: "img/light-star.jpg",
+      });
       await render(fabCanvas, carDataConfig);
       onClickAudio(fabCanvas);
       supportTouchDrag({
