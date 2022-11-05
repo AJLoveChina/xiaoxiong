@@ -7,6 +7,11 @@ import {
   drawFoodBackground,
   render,
 } from "../../common/render";
+import {
+  getTouchObj,
+  playTapObject,
+  supportTouchDrag,
+} from "../../common/touch";
 
 export function Car() {
   const div = useRef<HTMLDivElement>(null);
@@ -14,7 +19,7 @@ export function Car() {
     if (!div.current) {
       return;
     }
-
+    const touch = getTouchObj({ div: div.current });
     let dom = document.createElement("canvas");
     div.current.appendChild(dom);
 
@@ -28,7 +33,14 @@ export function Car() {
       await drawCarBackground(fabCanvas);
       await render(fabCanvas, carDataConfig);
       onClickAudio(fabCanvas);
-      supportDrag(fabCanvas);
+      supportTouchDrag({
+        canvas: fabCanvas,
+        touch,
+      });
+      playTapObject({
+        canvas: fabCanvas,
+        touch: touch,
+      });
     }
 
     main();
@@ -37,6 +49,7 @@ export function Car() {
       if (div.current) {
         div.current.innerHTML = "";
       }
+      touch.destroy();
     };
   }, [div]);
 
