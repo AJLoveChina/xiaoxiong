@@ -118,3 +118,32 @@ export function onClickAudio(canvas: fabric.Canvas) {
 export function startTest(canvas: fabric.Canvas, data: DataConfig) {
   let maxQ = Math.min(10, data.list.length);
 }
+
+export function supportDelete(options: { canvas: fabric.Canvas }) {
+  document.body.addEventListener("keydown", (ev) => {
+    if (ev.key.toLowerCase() === "delete") {
+      options.canvas.remove(options.canvas.getActiveObject());
+    }
+  });
+}
+
+export function supportCopyPaste(options: { canvas: fabric.Canvas }) {
+  let copyOBJ: fabric.Object | undefined = undefined;
+  document.body.addEventListener("copy", (ev) => {
+    options.canvas.getActiveObject()?.clone((obj: any) => {
+      copyOBJ = obj;
+    });
+  });
+
+  document.body.addEventListener("paste", (ev) => {
+    if (copyOBJ) {
+      copyOBJ.clone((obj: any) => {
+        obj.set({
+          left: 100,
+          top: 100,
+        });
+        options.canvas.add(obj);
+      });
+    }
+  });
+}

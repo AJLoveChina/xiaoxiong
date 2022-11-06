@@ -2,7 +2,12 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { CustomFabCanvas, initFabric, loadSP } from "../../common/fabric";
 import { drawCarBackground, render } from "../../common/render";
 import { carDataConfig } from "../../common/data/car.data.config";
-import { onClickAudio, supportDrag } from "../../common/event";
+import {
+  onClickAudio,
+  supportCopyPaste,
+  supportDelete,
+  supportDrag,
+} from "../../common/event";
 import { DataItem } from "../../common/data/data.config";
 import { useUploadPasteFile } from "../../common/uploadPasteFile";
 import { nonNullable } from "../../common/common";
@@ -64,7 +69,7 @@ export function Playground() {
       console.log("auto save");
       let json = fabCanvas.toObject();
       localStorage.setItem(localStorageKey, JSON.stringify(json));
-    }, 1000);
+    }, 500);
 
     fabCanvas.on("mouse:move", debounceSave);
     fabCanvas.on("mouse:up", debounceSave);
@@ -96,6 +101,8 @@ export function Playground() {
       (window as any).canvas = fabCanvas;
       supportDrag(fabCanvas);
       showCoords({ canvas: fabCanvas });
+      supportDelete({ canvas: fabCanvas });
+      supportCopyPaste({ canvas: fabCanvas });
     });
 
     return () => {

@@ -41,6 +41,7 @@ export class CustomFabCanvas extends fabric.Canvas {
 
     return json;
   }
+
 }
 
 export class CustomFabObj extends fabric.Object {
