@@ -1,12 +1,14 @@
 import { useCallback, useEffect, useRef, useState } from "react";
-import { initFabric, loadSP } from "../../common/fabric";
+import { CustomFabCanvas, initFabric, loadSP } from "../../common/fabric";
 import { drawCarBackground, render } from "../../common/render";
 import { carDataConfig } from "../../common/data/car.data.config";
 import { onClickAudio, supportDrag } from "../../common/event";
 import { DataItem } from "../../common/data/data.config";
 import { useUploadPasteFile } from "../../common/uploadPasteFile";
 import { nonNullable } from "../../common/common";
-import { Snackbar } from "@mui/material";
+import { debounce, Snackbar } from "@mui/material";
+import { showCoords } from "../../common/axios";
+import { fabric } from "fabric";
 
 interface FabricCanvasJSON {
   objects: fabric.Object[];
@@ -14,7 +16,8 @@ interface FabricCanvasJSON {
 
 export function Playground() {
   const div = useRef<HTMLDivElement>(null);
-  const [fabCanvas, setFabCanvas] = useState<fabric.Canvas | null>(null);
+  const [fabCanvas, setFabCanvas] = useState<CustomFabCanvas | null>(null);
+  const [bgImgURL, setbgImgURL] = useState("");
   const localStorageKey = "playground-json";
   const localStorageData = localStorage.getItem(localStorageKey);
   let data: FabricCanvasJSON;
@@ -50,18 +53,25 @@ export function Playground() {
   useUploadPasteFile(onFileUpload);
 
   useEffect(() => {
-    function save() {
+    if (!fabCanvas) {
+      return;
+    }
+
+    const debounceSave = debounce(function save() {
       if (!fabCanvas) {
         return;
       }
-      let json = fabCanvas.toJSON();
+      console.log("auto save");
+      let json = fabCanvas.toObject();
       localStorage.setItem(localStorageKey, JSON.stringify(json));
-    }
+    }, 1000);
 
-    document.body.addEventListener("mousemove", save);
+    fabCanvas.on("mouse:move", debounceSave);
+    fabCanvas.on("mouse:up", debounceSave);
 
     return () => {
-      document.body.removeEventListener("mousemove", save);
+      fabCanvas.off("mouse:move", debounceSave);
+      fabCanvas.off("mouse:up", debounceSave);
     };
   }, [fabCanvas]);
 
@@ -85,6 +95,7 @@ export function Playground() {
       (window as any).fabCanvas = fabCanvas;
       (window as any).canvas = fabCanvas;
       supportDrag(fabCanvas);
+      showCoords({ canvas: fabCanvas });
     });
 
     return () => {
@@ -95,6 +106,13 @@ export function Playground() {
       }
     };
   }, [div]);
+
+  function setBG() {
+    fabCanvas?.setBackgroundColor(
+      new fabric.Pattern({ source: bgImgURL, repeat: "repeat" }),
+      () => {}
+    );
+  }
 
   function popMsg(msg: string) {
     window.alert(msg);
@@ -136,6 +154,9 @@ export function Playground() {
         <button className={"button"} onClick={copyJson}>
           Copy JSON
         </button>
+        <br />
+        <input type="text" onChange={(ev) => setbgImgURL(ev.target.value)} />
+        <button onClick={setBG}>Set BG</button>
       </div>
 
       <div ref={div} key={"container"} />

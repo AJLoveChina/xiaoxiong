@@ -23,6 +23,24 @@ export class CustomFabCanvas extends fabric.Canvas {
   constructor(dom: HTMLCanvasElement, options: fabric.ICanvasOptions) {
     super(dom, options);
   }
+
+  toJSON() {
+    return this.toObject();
+  }
+
+  toObject() {
+    let json = super.toObject();
+    if (json.objects) {
+      json.objects = json.objects.filter((item: any) => {
+        if (item.bExcludeInExportJSON) {
+          return false;
+        }
+        return true;
+      });
+    }
+
+    return json;
+  }
 }
 
 export class CustomFabObj extends fabric.Object {
@@ -43,7 +61,7 @@ export function initFabric(dom: HTMLCanvasElement, options: ICanvasOptions) {
   fabric.Object.prototype.originX = "center";
   fabric.Object.prototype.originY = "center";
 
-  let fabCanvas = new fabric.Canvas(dom, {
+  let fabCanvas = new CustomFabCanvas(dom, {
     width: window.innerWidth,
     height: window.innerHeight,
     selection: true,

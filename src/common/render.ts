@@ -4,6 +4,7 @@ import { DataConfig } from "./data/data.config";
 import { ceshiIcon, refreshIcon } from "./svg";
 import { nonNullable, scaleObjTo, shapeType } from "./common";
 import { startTest } from "./event";
+import { locate1, locate2 } from "./shapes.locate";
 
 export async function addTestButton(
   canvas: fabric.Canvas,
@@ -57,10 +58,6 @@ export async function addShapes(
   options: { left: number; top: number },
   dataConfig: DataConfig
 ) {
-  const margin = 30;
-  let widthCount: number = margin;
-  let heightCount: number = margin + options.top;
-
   let shapes = (
     await Promise.all(
       dataConfig.list.map(async (item, idx) => {
@@ -69,48 +66,9 @@ export async function addShapes(
     )
   ).filter(nonNullable);
 
-  shapes = shapes.sort(() => {
-    return Math.random() - 0.5;
-  });
+  locate2({ shapes, canvas, ...options });
 
-  const shapesArea = shapes.reduce<number>((area, item) => {
-    return (
-      area +
-      (item.getScaledWidth() + margin) * (item.getScaledHeight() + margin)
-    );
-  }, 0);
-
-  const totalArea =
-    (canvas.getWidth() - options.left - 20) *
-    (canvas.getHeight() - options.top - 20);
-  const scaleTotal = Math.min(1, totalArea / shapesArea);
-  const scale = Math.pow(scaleTotal, 1 / 2);
-
-  console.log("scaleTotal", scaleTotal);
-  shapes.forEach((sp) => {
-    sp.set({
-      scaleX: (sp.scaleX || 1) * scale,
-      scaleY: (sp.scaleY || 1) * scale,
-    });
-
-    const scaledMargin = margin * scale;
-
-    if (widthCount + sp.getScaledWidth() < canvas.getWidth()) {
-      widthCount += sp.getScaledWidth();
-      widthCount += scaledMargin;
-    } else {
-      widthCount = scaledMargin + sp.getScaledWidth();
-      heightCount += sp.getScaledHeight();
-      heightCount += scaledMargin;
-    }
-
-    sp.set({
-      left: widthCount - sp.getScaledWidth() / 2,
-      top: heightCount + sp.getScaledHeight() / 2,
-    });
-
-    canvas.add(sp);
-  });
+  canvas.add(...shapes);
 }
 
 export async function render(canvas: fabric.Canvas, dataConfig: DataConfig) {
