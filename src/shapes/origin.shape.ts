@@ -11,7 +11,7 @@ export class OriginShape extends fabric.Circle implements ICustomObjOptions {
   constructor(options?: IOriginShapeOptions) {
     super({
       ...options,
-      radius: 4,
+      radius: 10,
       fill: "red",
       left: 0,
       top: 0,

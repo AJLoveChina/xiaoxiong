@@ -20,12 +20,25 @@ export const CustomFab = Object.assign(fabric, {
 });
 
 export class CustomFabCanvas extends fabric.Canvas {
+  _copyObject: fabric.Object | undefined = undefined;
+
   constructor(dom: HTMLCanvasElement, options: fabric.ICanvasOptions) {
     super(dom, options);
   }
 
   toJSON() {
     return this.toObject();
+  }
+
+  disableSelectAllObjs() {
+    this._objects.forEach(item => item.selectable = false)
+  }
+
+  disableMovementAllObjs() {
+    this._objects.forEach(item => {
+      item.lockMovementX = true;
+      item.lockMovementY = true;
+    })
   }
 
   toObject() {
@@ -42,6 +55,17 @@ export class CustomFabCanvas extends fabric.Canvas {
     return json;
   }
 
+  mousePosition: fabric.IPoint | undefined = undefined;
+
+  recordMousePosition() {
+    this.on("mouse:move", (ev) => {
+      this.mousePosition = this.getPointer(ev.e, false);
+    });
+    this.on("mouse:down", (ev) => {
+      this.mousePosition = this.getPointer(ev.e, false);
+      console.log("mouse:down recordMousePosition", this.mousePosition);
+    });
+  }
 }
 
 export class CustomFabObj extends fabric.Object {

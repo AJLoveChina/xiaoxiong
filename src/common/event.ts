@@ -5,6 +5,8 @@ import { XX } from "../shapes/xx.shape";
 import { Howl } from "howler";
 import { DataConfig } from "./data/data.config";
 import { IPoint } from "fabric/fabric-impl";
+import { useEffect } from "react";
+import { CustomFabCanvas } from "./fabric";
 
 export function supportDrag(canvas: fabric.Canvas) {
   let mouseDownPosition: IPoint | undefined = undefined;
@@ -127,23 +129,45 @@ export function supportDelete(options: { canvas: fabric.Canvas }) {
   });
 }
 
-export function supportCopyPaste(options: { canvas: fabric.Canvas }) {
-  let copyOBJ: fabric.Object | undefined = undefined;
-  document.body.addEventListener("copy", (ev) => {
-    options.canvas.getActiveObject()?.clone((obj: any) => {
-      copyOBJ = obj;
-    });
-  });
+export function useSupportCopyPaste(
+  canvas: CustomFabCanvas | null | undefined
+) {
+  useEffect(() => {
+    if (!canvas) {
+      return;
+    }
+    const onCopy = (ev: Event) => {
+      canvas.getActiveObject()?.clone((obj: any) => {
+        canvas._copyObject = obj;
+      });
+    };
 
-  document.body.addEventListener("paste", (ev) => {
-    if (copyOBJ) {
-      copyOBJ.clone((obj: any) => {
-        obj.set({
+    const onPaste = () => {
+      if (canvas._copyObject) {
+        let pos = {
           left: 100,
           top: 100,
+        };
+        if (canvas.mousePosition) {
+          pos = {
+            left: canvas.mousePosition.x,
+            top: canvas.mousePosition.y,
+          };
+        }
+        canvas._copyObject.clone((obj: any) => {
+          obj.set({
+            ...pos,
+          });
+          canvas.add(obj);
         });
-        options.canvas.add(obj);
-      });
-    }
-  });
+      }
+    };
+    document.body.addEventListener("copy", onCopy);
+    document.body.addEventListener("paste", onPaste);
+
+    return () => {
+      document.body.removeEventListener("copy", onCopy);
+      document.body.removeEventListener("paste", onPaste);
+    };
+  }, [canvas]);
 }

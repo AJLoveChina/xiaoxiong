@@ -4,9 +4,9 @@ import { drawCarBackground, render } from "../../common/render";
 import { carDataConfig } from "../../common/data/car.data.config";
 import {
   onClickAudio,
-  supportCopyPaste,
   supportDelete,
   supportDrag,
+  useSupportCopyPaste,
 } from "../../common/event";
 import { DataItem } from "../../common/data/data.config";
 import { useUploadPasteFile } from "../../common/uploadPasteFile";
@@ -32,17 +32,23 @@ export function Playground() {
     data = { objects: [] };
   }
 
+  useSupportCopyPaste(fabCanvas);
+
   const onFileUpload = useCallback(
     async (item: DataItem, ev: MouseEvent | undefined) => {
       if (!fabCanvas) {
         return;
       }
+      fabCanvas._copyObject = undefined;
       let sp = await loadSP(item);
       if (sp) {
         sp.hasControls = true;
         sp.lockMovementY = false;
         sp.lockMovementX = false;
         let canvasPoint = { x: 100, y: 100 };
+        if (fabCanvas.mousePosition) {
+          canvasPoint = fabCanvas.mousePosition;
+        }
         if (ev) {
           canvasPoint = fabCanvas.getPointer(ev, false);
         }
@@ -102,7 +108,7 @@ export function Playground() {
       supportDrag(fabCanvas);
       showCoords({ canvas: fabCanvas });
       supportDelete({ canvas: fabCanvas });
-      supportCopyPaste({ canvas: fabCanvas });
+      fabCanvas.recordMousePosition();
     });
 
     return () => {
@@ -127,8 +133,8 @@ export function Playground() {
 
   function copyJson() {
     if (fabCanvas) {
-      navigator.clipboard.writeText(JSON.stringify(fabCanvas.toJSON()));
-      popMsg("copy json success");
+      // navigator.clipboard.writeText(JSON.stringify(fabCanvas.toJSON()));
+      // popMsg("copy json success");
     } else {
       popMsg("copy json failed");
     }

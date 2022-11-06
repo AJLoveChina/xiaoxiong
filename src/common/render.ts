@@ -66,7 +66,7 @@ export async function addShapes(
     )
   ).filter(nonNullable);
 
-  locate2({ shapes, canvas, ...options });
+  locate1({ shapes, canvas, ...options });
 
   canvas.add(...shapes);
 }

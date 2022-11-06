@@ -20,13 +20,12 @@ export function playTapObject({
     const obj = canvas.findTarget(ev.srcEvent, false);
     if (obj && obj.type === shapeType.xx) {
       const xx = obj as XX;
-      console.log("tap", xx, xx.text);
+      // console.log("tap", xx, xx.text, (xx as any).img._objects[0].src);
+      //TODO remove
+      // navigator.clipboard.writeText(JSON.stringify((xx as any).img._objects[0].src));
       xx.playShort();
     }
   });
-  // touch.on("pan", function (ev) {
-  //   console.log("pan", ev);
-  // });
 }
 
 export function supportTouchDrag({

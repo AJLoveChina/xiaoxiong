@@ -47,6 +47,7 @@ export function getInitMatrix() {
 export enum CategoryEnum {
   FOOD,
   CAR,
+  CHRISTMAS,
 }
 
 export function nonNullable<T>(value: T): value is NonNullable<T> {

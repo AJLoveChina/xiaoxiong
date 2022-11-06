@@ -9,12 +9,13 @@ const fabAny: any = fabric;
 
 export interface XXOptions extends IGroupOptions {
   audioShort?: string;
+  label?: string;
   img?: fabric.Object;
   text?: fabric.Object;
   audioShape?: AudioShape;
 }
 
-export class XX extends fabric.Group {
+export class XX extends fabric.Group implements XXOptions{
   type = shapeType.xx;
   audio?: AudioShape;
   audioShort?: string;
@@ -22,12 +23,31 @@ export class XX extends fabric.Group {
   img?: fabric.Object;
   text?: fabric.Object;
   audioShape?: AudioShape;
+  label?: string;
 
   constructor(options?: XXOptions) {
     // options?.audioShape
     const allShapes = options
       ? [options.img, options?.text].filter(nonNullable)
       : [];
+
+    // if (options && options.label) {
+    //   let labelOptions = {
+    //     left: 0,
+    //     top: 0,
+    //   }
+    //   if (options.img) {
+    //     labelOptions  = {
+    //       left: (options.width || 0) / 2,
+    //       top: options.img.getScaledHeight() / 2 + 20,
+    //     }
+    //   }
+    //   let text = new fabric.Text(options.label, {
+    //     ...labelOptions,
+    //     fontSize: 12,
+    //   });
+    //   allShapes.push(text);
+    // }
 
     super(allShapes, {
       left: 0,
@@ -58,7 +78,11 @@ export class XX extends fabric.Group {
   playShort() {
     this.clearSound();
     if (this.audioShort) {
-      this.currentPlayHow = playAudio(`/audio/${this.audioShort}`);
+      let audioShort = this.audioShort;
+      if (!audioShort.startsWith("/")) {
+        audioShort = "/" + audioShort;
+      }
+      this.currentPlayHow = playAudio(`/audio${audioShort}`);
       return this.currentPlayHow;
     }
   }
