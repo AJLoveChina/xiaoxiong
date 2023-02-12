@@ -2,11 +2,7 @@ import { Food } from "./comps/Food";
 import { fabric } from "fabric";
 import { Dashboard } from "./comps/dashboard/dashboard";
 import "./App.scss";
-import VConsole from "vconsole";
 
-if (process.env.NODE_ENV === "development") {
-  const vConsole = new VConsole();
-}
 
 function App() {
   fabric.Object.prototype.originX = "center";

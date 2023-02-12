@@ -1,4 +1,4 @@
-import { CSSProperties, useState } from "react";
+import { CSSProperties, useEffect, useState } from "react";
 import { CategoryEnum } from "../../common/common";
 import { HomeSVG, Reload } from "../../svgs/svgs";
 import { DashboardCard } from "./DashboardCard";
@@ -10,6 +10,28 @@ import { Car } from "../car/Car";
 
 export function Dashboard() {
   const [type, setType] = useState<CategoryEnum | "playground">();
+  const localStorageKey = "playgroundCatType";
+  useEffect(() => {
+    const local = localStorage.getItem(localStorageKey);
+    if (!local) {
+      return;
+    }
+    if (Object.values(CategoryEnum).includes(local as CategoryEnum)) {
+      setType(local as CategoryEnum);
+    }
+    if (local === "playground") {
+      setType(local);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (type) {
+      localStorage.setItem(localStorageKey, type);
+    } else {
+      localStorage.removeItem(localStorageKey);
+    }
+  }, [type]);
+
   const cards = [
     {
       img: "img/dashboard/food.jpg",
@@ -50,7 +72,7 @@ export function Dashboard() {
 
   return (
     <div>
-      {(type === undefined) && (
+      {type === undefined && (
         <div className={"dashboard"}>
           {cards.map((card) => {
             return (

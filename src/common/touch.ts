@@ -17,6 +17,7 @@ export function playTapObject({
   touch: HammerManager;
 }) {
   touch.on("tap", (ev) => {
+    console.log("tap", ev);
     const obj = canvas.findTarget(ev.srcEvent, false);
     if (obj && obj.type === shapeType.xx) {
       const xx = obj as XX;
