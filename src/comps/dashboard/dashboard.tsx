@@ -8,6 +8,7 @@ import { Christmas } from "../chris/christmas";
 import { Food } from "../Food";
 import { Car } from "../car/Car";
 import { loadBG } from "../../common/background";
+import styles from "./dashboard.module.scss";
 
 export function Dashboard() {
   const [type, setType] = useState<CategoryEnum | "playground">();
@@ -75,17 +76,21 @@ export function Dashboard() {
   return (
     <div>
       {type === undefined && (
-        <div className={"dashboard"}>
+        <div className={styles.dashboard}>
           {cards.map((card) => {
             return (
-              <div key={card.path} onClick={() => setType(card.cat)}>
-                <DashboardCard
-                  style={{
-                    margin: "20px",
-                  }}
-                  img={card.img}
-                  title={card.title}
-                />
+              <div className={styles.boxParent}>
+                <div
+                  key={card.path}
+                  className={styles.box}
+                  onClick={() => setType(card.cat)}
+                >
+                  <div className={styles.boxInside}>
+                    <div className={styles.boxInsideContent}>
+                      <DashboardCard img={card.img} title={card.title} />
+                    </div>
+                  </div>
+                </div>
               </div>
             );
           })}

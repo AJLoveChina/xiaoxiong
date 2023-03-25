@@ -37,7 +37,6 @@ export function DashboardCard(props: {
 
     <div style={props.style}>
       <Card
-        sx={{ maxWidth: 500, width: 300 }}
         style={{
           background: `${
             randomColors[Math.floor(Math.random() * randomColors.length)]

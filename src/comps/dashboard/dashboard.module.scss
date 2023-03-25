@@ -1,0 +1,54 @@
+.boxParent {
+  filter: drop-shadow(0px 0px 10px rgba(50, 50, 0, 0.5));
+}
+
+.box {
+  position: relative;
+  $clipPath: polygon(
+    55% 0,
+    45% 0,
+    0 30%,
+    0 70%,
+    45% 100%,
+    55% 100%,
+    100% 70%,
+    100% 30%
+  );
+  $w: 300px;
+  $h: 300px;
+  width: $w;
+  height: $h;
+  clip-path: $clipPath;
+  background: #eee;
+  margin: 20px;
+
+  .boxInside {
+    $pad: 2px;
+    width: $w - $pad;
+    height: $h - $pad;
+    position: absolute;
+    top: $pad / 2;
+    left: $pad / 2;
+    clip-path: $clipPath;
+    background: white;
+
+    .boxInsideContent {
+      $pad: 20px;
+      width: $w - $pad;
+      height: $h - $pad;
+      position: absolute;
+      top: $pad / 2;
+      left: $pad / 2;
+      clip-path: $clipPath;
+    }
+  }
+}
+
+.dashboard {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  padding-top: 205px;
+}
