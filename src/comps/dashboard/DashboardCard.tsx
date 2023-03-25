@@ -6,6 +6,7 @@ import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
+import { randomColors } from "../../common/common";
 
 export function DashboardCard(props: {
   style?: CSSProperties;
@@ -35,21 +36,29 @@ export function DashboardCard(props: {
     // </div>
 
     <div style={props.style}>
-      <Card sx={{ maxWidth: 500, width: 300 }}>
+      <Card
+        sx={{ maxWidth: 500, width: 300 }}
+        style={{
+          background: `${
+            randomColors[Math.floor(Math.random() * randomColors.length)]
+          }`,
+        }}
+      >
         <CardMedia component="img" height="140" image={props.img} />
         <CardContent>
-          <Typography gutterBottom variant="h5" component="div">
+          <Typography
+            gutterBottom
+            variant="h5"
+            component="div"
+            style={{ color: "white", fontWeight: "bold", textAlign: "center" }}
+          >
             {props.title}
           </Typography>
-          {/* <Typography variant="body2" color="text.secondary">
-          Lizards are a widespread group of squamate reptiles, with over 6,000
-          species, ranging across all continents except Antarctica
-        </Typography> */}
         </CardContent>
-        <CardActions>
-          <Button size="small">打开</Button>
-          {/* <Button size="small">Learn More</Button> */}
-        </CardActions>
+        {/*<CardActions>*/}
+        {/*  <Button size="small">打开</Button>*/}
+        {/*  /!* <Button size="small">Learn More</Button> *!/*/}
+        {/*</CardActions>*/}
       </Card>
     </div>
   );

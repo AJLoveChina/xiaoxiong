@@ -1,5 +1,5 @@
 import { CSSProperties, useEffect, useState } from "react";
-import { CategoryEnum } from "../../common/common";
+import { CategoryEnum, randomColors } from "../../common/common";
 import { HomeSVG, Reload } from "../../svgs/svgs";
 import { DashboardCard } from "./DashboardCard";
 import "./dashboard.scss";
@@ -7,11 +7,13 @@ import { Playground } from "../playground/playground";
 import { Christmas } from "../chris/christmas";
 import { Food } from "../Food";
 import { Car } from "../car/Car";
+import { loadBG } from "../../common/background";
 
 export function Dashboard() {
   const [type, setType] = useState<CategoryEnum | "playground">();
   const localStorageKey = "playgroundCatType";
   useEffect(() => {
+    loadBG();
     const local = localStorage.getItem(localStorageKey);
     if (!local) {
       return;
@@ -78,7 +80,9 @@ export function Dashboard() {
             return (
               <div key={card.path} onClick={() => setType(card.cat)}>
                 <DashboardCard
-                  style={{ margin: "20px" }}
+                  style={{
+                    margin: "20px",
+                  }}
                   img={card.img}
                   title={card.title}
                 />
