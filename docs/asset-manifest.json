@@ -1,0 +1,18 @@
+{
+  "files": {
+    "main.css": "/static/css/main.4c672ffe.css",
+    "main.js": "/static/js/main.0a81f929.js",
+    "static/js/787.bee218da.chunk.js": "/static/js/787.bee218da.chunk.js",
+    "static/media/kids-toys-frame-concept-free-vector.jpg": "/static/media/kids-toys-frame-concept-free-vector.12162d953aed9792623a.jpg",
+    "static/media/home.svg": "/static/media/home.bd977f20d6af77cd3533d67aa1ceea28.svg",
+    "static/media/reload.svg": "/static/media/reload.b6a3a56f489f44fdc1c1d9bf4a2805ab.svg",
+    "index.html": "/index.html",
+    "main.4c672ffe.css.map": "/static/css/main.4c672ffe.css.map",
+    "main.0a81f929.js.map": "/static/js/main.0a81f929.js.map",
+    "787.bee218da.chunk.js.map": "/static/js/787.bee218da.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.4c672ffe.css",
+    "static/js/main.0a81f929.js"
+  ]
+}
