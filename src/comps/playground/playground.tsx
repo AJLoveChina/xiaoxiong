@@ -133,8 +133,8 @@ export function Playground() {
 
   function copyJson() {
     if (fabCanvas) {
-      // navigator.clipboard.writeText(JSON.stringify(fabCanvas.toJSON()));
-      // popMsg("copy json success");
+      navigator.clipboard.writeText(JSON.stringify(fabCanvas.toJSON()));
+      popMsg("copy json success");
     } else {
       popMsg("copy json failed");
     }

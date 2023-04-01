@@ -9,6 +9,7 @@ import { Food } from "../Food";
 import { Car } from "../car/Car";
 import { loadBG } from "../../common/background";
 import styles from "./dashboard.module.scss";
+import { Carcartoon } from "../car/CarCartoon";
 
 export function Dashboard() {
   const [type, setType] = useState<CategoryEnum | "playground">();
@@ -37,22 +38,24 @@ export function Dashboard() {
 
   const cards = [
     {
+      img: "img/dashboard/car-cartoon.jpg",
+      title: "交通工具",
+      cat: CategoryEnum.CAR_CARTOON,
+    },
+    {
       img: "img/dashboard/food.jpg",
       title: "美味的食物",
       cat: CategoryEnum.FOOD,
-      path: "/food",
     },
     {
       img: "img/dashboard/boli.jpg",
       title: "交通工具",
       cat: CategoryEnum.CAR,
-      path: "/car",
     },
     {
       img: "img/dashboard/jiangbinren.png",
       title: "圣诞节",
       cat: CategoryEnum.CHRISTMAS,
-      path: "/christmas",
     },
   ];
 
@@ -74,20 +77,17 @@ export function Dashboard() {
   };
 
   return (
-    <div>
+    <>
       {type === undefined && (
         <div className={styles.dashboard}>
           {cards.map((card) => {
             return (
-              <div className={styles.boxParent}>
-                <div
-                  key={card.path}
-                  className={styles.box}
-                  onClick={() => setType(card.cat)}
-                >
+              <div className={styles.boxParent} key={card.cat}>
+                <div className={styles.box} onClick={() => setType(card.cat)}>
                   <div className={styles.boxInside}>
                     <div className={styles.boxInsideContent}>
-                      <DashboardCard img={card.img} title={card.title} />
+                      <img style={{ width: "100%" }} src={card.img} />
+                      {/*<DashboardCard img={card.img} title={card.title} />*/}
                     </div>
                   </div>
                 </div>
@@ -120,6 +120,15 @@ export function Dashboard() {
       {type === CategoryEnum.CHRISTMAS && (
         <div>
           <Christmas />
+          <div onClick={() => setType(undefined)}>
+            <HomeSVG style={homeBackPosCss} />
+          </div>
+          <Reload onClick={() => location.reload()} style={reloadposCss} />
+        </div>
+      )}
+      {type === CategoryEnum.CAR_CARTOON && (
+        <div>
+          <Carcartoon />
           <div onClick={() => setType(undefined)}>
             <HomeSVG style={homeBackPosCss} />
           </div>
@@ -182,6 +191,6 @@ export function Dashboard() {
       {/*  </Route>*/}
       {/*</Switch>*/}
       {/*</Router>*/}
-    </div>
+    </>
   );
 }

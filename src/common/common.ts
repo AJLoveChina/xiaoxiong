@@ -47,6 +47,7 @@ export function getInitMatrix() {
 export enum CategoryEnum {
   FOOD = "FOOD",
   CAR = "CAR",
+  CAR_CARTOON = "CAR_CARTOON",
   CHRISTMAS = "CHRISTMAS",
 }
 
